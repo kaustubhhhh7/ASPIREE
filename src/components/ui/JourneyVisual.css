@@ -1,0 +1,238 @@
+.journey-visual-wrapper {
+    width: 100%;
+    height: 600px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: visible;
+    cursor: crosshair;
+}
+
+.journey-canvas {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+}
+
+.central-glow {
+    display: none;
+}
+
+.artifact-card {
+    position: absolute;
+    width: 220px;
+    height: 280px;
+    transition: filter 0.5s ease, opacity 0.5s ease;
+    will-change: transform;
+}
+
+.artifact-card.dimmed {
+    filter: blur(4px) grayscale(0.5);
+    opacity: 0.3;
+}
+
+.artifact-card.hovered {
+    z-index: 100 !important;
+    filter: none;
+    opacity: 1;
+}
+
+.card-inner {
+    width: 100%;
+    height: 100%;
+    background: #ffffff;
+    padding: 12px;
+    padding-bottom: 64px;
+    border-radius: 2px;
+    box-shadow:
+        0 8px 24px rgba(0, 0, 64, 0.08),
+        0 1px 2px rgba(0, 0, 0, 0.04);
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.4s cubic-bezier(0.2, 0, 0.2, 1);
+    /* Subtle Paper Texture */
+    background-image:
+        repeating-linear-gradient(45deg, rgba(0, 0, 0, 0.005) 0px, rgba(0, 0, 0, 0.005) 1px, transparent 1px, transparent 10px),
+        linear-gradient(to bottom, #ffffff, #fdfcfb);
+}
+
+.artifact-card:hover .card-inner {
+    transform: scale(1.03) translateZ(10px) !important;
+    box-shadow:
+        0 30px 60px -12px rgba(0, 0, 64, 0.18),
+        0 18px 36px -18px rgba(0, 0, 0, 0.12);
+}
+
+.photo-frame {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+    background: #f8fafc;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.photo-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.8s cubic-bezier(0.2, 0, 0.2, 1);
+}
+
+/* Removed image scale animation on hover */
+
+.frame-gloss {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.3) 0%, transparent 40%, rgba(0, 0, 0, 0.03) 100%);
+    pointer-events: none;
+    z-index: 2;
+}
+
+.card-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 14px 16px;
+    background: transparent;
+    text-align: left;
+}
+
+.card-info h4 {
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: #0B1238;
+    margin: 0;
+    margin-bottom: 2px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+}
+
+.card-info p {
+    font-size: 0.7rem;
+    color: #64748b;
+    margin: 0;
+    font-weight: 600;
+    font-style: italic;
+    opacity: 0.8;
+}
+
+.card-pin {
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 22px;
+    height: 22px;
+    background: radial-gradient(circle at 35% 35%, #ff5f43 0%, #d92d20 50%, #8b100a 100%);
+    border-radius: 50%;
+    box-shadow:
+        0 6px 12px rgba(0, 0, 0, 0.25),
+        inset -2px -2px 4px rgba(0, 0, 0, 0.4),
+        inset 2px 2px 4px rgba(255, 255, 255, 0.25);
+    z-index: 50;
+}
+
+/* Metallic needle neck */
+.card-pin::before {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    width: 2px;
+    height: 8px;
+    background: linear-gradient(to right, #94a3b8, #cbd5e1, #94a3b8);
+    transform: translateX(-50%);
+    z-index: -1;
+}
+
+.card-pin::after {
+    content: '';
+    position: absolute;
+    top: 25%;
+    left: 25%;
+    width: 4px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.5);
+    filter: blur(0.5px);
+    border-radius: 50%;
+}
+
+.card-shadow {
+    position: absolute;
+    bottom: -15px;
+    left: 10%;
+    width: 80%;
+    height: 20px;
+    background: black;
+    filter: blur(20px);
+    opacity: 0.12;
+    border-radius: 50%;
+    z-index: -1;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.artifact-card:hover .card-shadow {
+    opacity: 0.18;
+    transform: scale(1.05) translateY(4px);
+}
+
+/* Ambient Particles */
+.ambient-vignette {
+    display: none;
+}
+
+.floating-particle {
+    display: none;
+}
+
+.connection-overlay {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+@media (max-width: 1024px) {
+    .artifact-card {
+        width: 180px;
+        height: 230px;
+    }
+}
+
+@media (max-width: 640px) {
+    .journey-visual-wrapper {
+        height: 450px;
+    }
+
+    .artifact-card {
+        width: 140px;
+        height: 180px;
+    }
+
+    .artifact-card[style*="x: -120"] {
+        x: -60 !important;
+    }
+
+    .artifact-card[style*="x: 140"] {
+        x: 70 !important;
+    }
+
+    .artifact-card[style*="x: -150"] {
+        x: -70 !important;
+    }
+
+    .artifact-card[style*="x: 130"] {
+        x: 60 !important;
+    }
+}
